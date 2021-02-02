@@ -1,0 +1,31 @@
+h1 {
+    font-size: 20px;
+}
+.card {
+    min-height: 150px;
+}
+.card-body {
+    padding: 15px 15px 5px 15px;
+}
+.viewAccounts {
+    float: right;
+    color: #0c0c0c;
+    font-size: 12px;
+    cursor: pointer;
+}
+.viewPayees {
+    float: left;
+    color: #0c0c0c;
+    font-size: 12px;
+    cursor: pointer;
+}
+.card-body{
+    text-align: center;
+}
+.card-footer{
+    text-align: center;
+}
+
+.rowColor{
+    background-color: darkgray !important;
+}

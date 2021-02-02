@@ -1,0 +1,11 @@
+.addMore{
+    float: right;
+    font-size: 16px;
+}
+.noAccounts{
+    text-align: center;
+}
+.cursor{
+    cursor: pointer;
+    color: #000;
+}

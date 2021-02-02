@@ -1,0 +1,107 @@
+<app-header [loaderFlag]="loader"></app-header>
+<div class="container mt-5">
+    <h3>Accounts List <span class="addMore"><button type="button" class="btn btn-primary" (click)="openAddForm()">Add New Account</button></span></h3>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <table class="table table-striped" *ngIf="budgetAccountsCount;else noAccounts">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Balance</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let account of budgetAccounts">
+                    <td>{{account.name}}</td>
+                    <td>{{account.type}}</td>
+                    <td>{{budgetDetails.currency_format.currency_symbol}}{{account.balance}}</td>
+                    <td><a (click)="openAccountDetails(account.id)" class="viewMore cursor">View Details</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <ng-template #noAccounts>
+                <hr/>
+                <p class="noAccounts">No Account Found</p>
+            </ng-template>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
+  
+<!-- Modal Create New Account-->
+<div class="modal fade" id="addNewAccount" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Account Details - </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form [formGroup]="createNewAccount" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+                <div class="form-group">
+                <label for="accountType">What type of account are you adding?</label>
+                <select class="form-control" formControlName="accountType" id="accountType" required>
+                    <option value="checking">Checking</option>
+                    <option value="savings">Savings</option>
+                    <option value="cash">Cash</option>
+                    <option value="creditCard">Credit Card</option>
+                    <option value="lineOfCredit">Line of Credit</option>
+                </select>
+                </div>
+                <div *ngIf="isValidInput('accountType')" class="alert alert-danger">
+                    <div *ngIf="isRequiredInput('accountType')">Account type is required.</div>
+                </div>
+                <div class="form-group">
+                    <label for="accountName">Give it a nickname</label>
+                    <input type="text" class="form-control" formControlName="accountName" id="accountName" required>
+                </div>
+                <div *ngIf="isValidInput('accountName')" class="alert alert-danger">
+                    <div *ngIf="isRequiredInput('accountName')">Account nickname is required.</div>
+                </div>
+                <div class="form-group">
+                    <label for="accountBalance">What is your current account balance?
+                    </label>
+                    <input type="number" class="form-control" formControlName="accountBalance" id="accountBalance" required>
+                </div>
+                <div *ngIf="isValidInput('accountBalance')" class="alert alert-danger">
+                    <div *ngIf="isRequiredInput('accountBalance')">Account balance is required.</div>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" [disabled]="!createNewAccount.valid" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+    </div>
+</div>
+</div>
+
+<!-- Modal View Account Details-->
+<div class="modal fade" id="viewAccountDetails" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Account Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><b>Account Name:</b> {{accountDetails?.name}}</p>
+                <p><b>Account Type:</b> {{accountDetails?.type}}</p>
+                <p><b>On Budget:</b> {{accountDetails?.on_budget ? 'Yes' : 'No'}}</p>
+                <p><b>Is Closed:</b> {{accountDetails?.closed ? 'Yes' : 'No'}}</p>
+                <p><b>Account Balance:</b> {{accountDetails?.balance}}</p>
+                <p><b>Cleared Balance:</b> {{accountDetails?.cleared_balance}}</p>
+                <p><b>Un-Cleared Balance:</b> {{accountDetails?.uncleared_balance}}</p>
+                <p><b>Is Neleted Account:</b> {{accountDetails?.deleted ? 'Yes' : 'No'}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="closeAccountDetails()" class="btn btn-primary">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

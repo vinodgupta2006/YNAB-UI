@@ -1,0 +1,10 @@
+.noPayee, .noPayeeTransactions{
+    text-align: center;
+}
+.cursor{
+    cursor: pointer;
+    color: #000;
+}
+#viewPayeeDetails .modal-dialog{
+    max-width: 70%;
+}
